@@ -1,65 +1,69 @@
-import { siteConfig } from './lib/site-config'
+import { NoteHostSiteConfig, googleTag } from 'notehost'
+import { PAGE_SCRIPT_JS_STRING } from './_page-script-js-string'
 
-export default siteConfig({
-  // the site's root Notion page (required)
-  rootNotionPageId: 'https://scrawny-bandicoot-d3f.notion.site/Hello-World-1a28b58c28918085aedcfe4bab0c7758',
+// Set this to your Google Tag ID from Google Analytics
+const GOOGLE_TAG_ID = ''
 
-  // if you want to restrict pages to a single notion workspace (optional)
-  // (this should be a Notion ID; see the docs for how to extract this)
-  rootNotionSpaceId:  '',
-
-  // basic site info (required)
-  name: 'MG Public Knowledge Hub',
+export const SITE_CONFIG: NoteHostSiteConfig = {
   domain: 'mghalip.com',
-  author: 'Mahprat Ghalip',
 
-  // open graph metadata (optional)
-  description: 'Welcome to MG Public Knowledge Hub - A Place for Shared Learning and Resources',
+  // Metatags, optional
+  // For main page link preview
+  siteName: '',
+  siteDescription: '',
+  siteImage: '',
 
-  // social usernames (optional)
-  twitter: '',
-  github: 'mghalip',
-  linkedin: 'mahprat ghalip',
-  // mastodon: '#', // optional mastodon profile URL, provides link verification
-  // newsletter: '#', // optional newsletter URL
-  // youtube: '#', // optional youtube channel name or `channel/UCGbXXXXXXXXXXXXXXXXXXXXXX`
+  // Twitter handle, optional
+  // twitterHandle: '',
 
-  // default notion icon and cover images for site-wide consistency (optional)
-  // page-specific values will override these site-wide defaults
-  defaultPageIcon: null,
-  defaultPageCover: null,
-  defaultPageCoverPosition: 0.5,
+  // URL to custom favicon.ico
+  // siteIcon: '',
 
-  // whether or not to enable support for LQIP preview images (optional)
-  isPreviewImageSupportEnabled: true,
+  // Additional safety: avoid serving extraneous Notion content from your website
+  // Use the value from your Notion settings => Workspace => Settings => Domain
+  // notionDomain: '',
 
-  // whether or not redis is enabled for caching generated preview images (optional)
-  // NOTE: if you enable redis, you need to set the `REDIS_HOST` and `REDIS_PASSWORD`
-  // environment variables. see the readme for more info
-  isRedisEnabled: false,
+  // Map slugs (short page names) to Notion page IDs
+  // Empty slug is your main page
+  slugToPage: {
+    '': '',
+    contact: 'NOTION_PAGE_ID',
+    about: 'NOTION_PAGE_ID',
+    // Hint: you can use '/' in slug name to create subpages
+    'about/people': 'NOTION_PAGE_ID',
+  },
 
-  // map of notion page IDs to URL paths (optional)
-  // any pages defined here will override their default URL paths
-  // example:
-  //
-  // pageUrlOverrides: {
-  //   '/foo': '067dd719a912471ea9a3ac10710e7fdf',
-  //   '/bar': '0be6efce9daf42688f65c76b89f8eb27'
-  // }
-  pageUrlOverrides: null,
-
-  // whether to use the default notion navigation style or a custom one with links to
-  // important pages. To use `navigationLinks`, set `navigationStyle` to `custom`.
-  navigationStyle: 'default'
-  // navigationStyle: 'custom',
-  // navigationLinks: [
-  //   {
-  //     title: 'About',
-  //     pageId: 'f1199d37579b41cbabfc0b5174f4256a'
+  // Rewrite meta tags for specific pages
+  // Use the Notion page ID as the key
+  // pageMetadata: {
+  //   'NOTION_PAGE_ID': {
+  //     title: 'My Custom Page Title',
+  //     description: 'My custom page description',
+  //     image: 'https://imagehosting.com/images/page_preview.jpg',
+  //     author: 'My Name',
   //   },
-  //   {
-  //     title: 'Contact',
-  //     pageId: '6a29ebcb935a4f0689fe661ab5f3b8d1'
-  //   }
-  // ]
-})
+  // },
+
+  // Subdomain redirects are optional
+  // But it is recommended to have one for www
+  subDomains: {
+    www: {
+      redirect: 'https://mghalip.com',
+    },
+  },
+
+  // The 404 (not found) page is optional
+  // If you don't have one, the default 404 page will be used
+  // fof: {
+  //   page: "NOTION_PAGE_ID",
+  //   slug: "404", // default
+  // },
+
+  // Google Font name, you can choose from https://fonts.google.com
+  googleFont: 'Roboto',
+
+  // Custom JS for head and body of a Notion page
+  customHeadCSS: ``,
+  customHeadJS: googleTag(GOOGLE_TAG_ID),
+  customBodyJS: PAGE_SCRIPT_JS_STRING,
+}
