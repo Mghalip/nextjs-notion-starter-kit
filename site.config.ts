@@ -2,11 +2,11 @@ import { siteConfig } from './lib/site-config'
 
 export default siteConfig({
   // the site's root Notion page (required)
-  rootNotionPageId: '1a28b58c28918085aedcfe4bab0c7758',
+  rootNotionPageId: 'https://scrawny-bandicoot-d3f.notion.site/Hello-World-1a28b58c28918085aedcfe4bab0c7758',
 
   // if you want to restrict pages to a single notion workspace (optional)
   // (this should be a Notion ID; see the docs for how to extract this)
-  rootNotionSpaceId: 1a28b58c28918085aedcfe4bab0c7758,
+  rootNotionSpaceId:  '',
 
   // basic site info (required)
   name: 'MG Public Knowledge Hub',
